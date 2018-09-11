@@ -5,8 +5,8 @@ import time
 
 vars = {
     "url": "http://www.ganjuke.com/juziying.html",
-    "username": "18201435425",
-    "password": "gch3103152"
+    "username": "xxx",
+    "password": "xxx"
 }
 
 
