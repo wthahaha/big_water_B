@@ -1,16 +1,30 @@
 # encoding: utf-8
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 import time
+import os
+from os.path import dirname, join
+from dotenv import load_dotenv
+from config import config
 
+env_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path=env_path)
 
+username = os.getenv('username')
+password = os.getenv('password')
+if not password:
+    username = config.get('username')
+    password = config.get('password')
 vars = {
     "url": "http://www.ganjuke.com/juziying.html",
-    "username": "xxx",
-    "password": "xxx"
+    "username": username,
+    "password": password
 }
 
-
-driver = webdriver.Chrome()
+# 无界面浏览器支持
+chrome_options=Options()
+chrome_options.add_argument('--headless')
+driver = webdriver.Chrome(chrome_options=chrome_options)
 driver.get(vars['url'])
 # 点击登陆按钮
 login = driver.find_element_by_css_selector("body > div.wrap > div.header-banner > div > div > div > a.btn-link-orange")
@@ -59,9 +73,9 @@ driver.implicitly_wait(30)
 driver.get('http://www.ganjuke.com/index.php?c=post&fid=533')
 print(driver.title)
 time.sleep(4)
-# 输入帖子题目
+# 输入帖子题目print(atc_title.text)
+
 atc_title = driver.find_element_by_css_selector("#J_atc_title")
-print(atc_title.text)
 atc_title.send_keys("乙肝传播途径不包括食物传播")
 time.sleep(4)
 
@@ -89,4 +103,5 @@ print(button.text)
 button.click()
 driver.implicitly_wait(30)
 time.sleep(10)
+driver.close()
 driver.close()
